@@ -1,0 +1,87 @@
+version: "1.0"
+
+setup:
+  install:
+    - npm install
+  compile:
+    - npx hardhat compile
+
+testing:
+  run_tests:
+    - npx hardhat test
+  coverage:
+    - npx hardhat coverage
+
+deployment:
+  deploy_v1:
+    - npx hardhat run scripts/deploy-v1.js --network hardhat
+  upgrade_to_v2:
+    - npx hardhat run scripts/upgrade-to-v2.js --network hardhat
+  upgrade_to_v3:
+    - npx hardhat run scripts/upgrade-to-v3.js --network hardhat
+
+verification:
+  test_files:
+    - test/TokenVaultV1.test.js
+    - test/upgrade-v1-to-v2.test.js
+    - test/upgrade-v2-to-v3.test.js
+    - test/security.test.js
+  
+  contract_files:
+    - contracts/TokenVaultV1.sol
+    - contracts/TokenVaultV2.sol
+    - contracts/TokenVaultV3.sol
+    - contracts/mocks/MockERC20.sol
+
+  required_functions:
+    TokenVaultV1:
+      - initialize
+      - deposit
+      - withdraw
+      - balanceOf
+      - totalDeposits
+      - getDepositFee
+      - getImplementationVersion
+    
+    TokenVaultV2:
+      - initialize
+      - deposit
+      - withdraw
+      - balanceOf
+      - totalDeposits
+      - getDepositFee
+      - getImplementationVersion
+      - setYieldRate
+      - getYieldRate
+      - claimYield
+      - getUserYield
+      - pauseDeposits
+      - unpauseDeposits
+      - isDepositsPaused
+    
+    TokenVaultV3:
+      - initialize
+      - deposit
+      - withdraw
+      - balanceOf
+      - totalDeposits
+      - getDepositFee
+      - getImplementationVersion
+      - setYieldRate
+      - getYieldRate
+      - claimYield
+      - getUserYield
+      - pauseDeposits
+      - unpauseDeposits
+      - isDepositsPaused
+      - emergencyWithdraw
+      - setWithdrawalDelay
+      - getWithdrawalDelay
+      - requestWithdrawal
+      - executeWithdrawal
+      - getWithdrawalRequest
+
+environment:
+  node_version: ">=16.0.0"
+  hardhat_version: "^2.19.0"
+  solidity_version: "0.8.22"
